@@ -3,17 +3,23 @@ const jwt=require('jsonwebtoken')
 
 
 exports.userRegistration = async (req, res) => {
-    console.log(req.body);
-    // res.send('<h3>Request for user registration is hit </h3>')
-    const { email, password, username } = req.body
-    if (!email || !password || !username) {
-        res.status(400).json("Invalid Data")
-    } else {
-        const newUser = new users({
-            email, password, username
-        })
-        await newUser.save()
-        res.status(200).json(newUser)
+
+    try{ console.log(req.body);
+        // res.send('<h3>Request for user registration is hit </h3>')
+        const { email, password, username } = req.body
+        if (!email || !password || !username) {
+            res.status(400).json("Invalid Data")
+        } else {
+            const newUser = new users({
+                email, password, username
+            })
+            await newUser.save()
+            res.status(200).json(newUser)
+        }
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json(err)
     }
 }
 
